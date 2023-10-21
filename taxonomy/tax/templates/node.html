@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<head>
+
+<title> {{ n.pk }} : {{ n.name.text }} </title>
+<style>
+{% include 'style.css' %}
+</style>
+
+</head>
+
+<body>
+
+{% include 'nav.html' %}
+
+<div class="bread">
+<ul>
+	{% for x in h %}
+	<li><a href="/{{ x.pk }}/"><em>{{ x.name.text }}</em></a></li>
+	{% endfor %}
+<ul>
+</div>
+
+<p><a href="/{{ n.p.pk }}/" class="up">&#11014;</a></p>
+
+<h1>{{ n.rank }} : <em>{{ n.name.text }}</em></h1>
+
+<p>
+<!--	Here comes data specific to this node ie a table of id, name, url (if any) etc-->
+	<table class="det" border="1">
+	<tbody>
+	<tr><th>Id</th><td>{{ n.pk }}</td></tr>
+	<tr><th>Rank</th><td>{{ n.rank }}</td></tr>
+	<tr><th>Name</th><td>{{ n.name.text }}</td></tr>
+	{% if n.image.url %}
+	<tr><th>Image</th><td><a href="{{ n.image.url}}">Link</a></td></tr>	
+	{% endif %}
+	</tbody>
+	</table>
+</p>
+
+<h2>Children</h2>
+
+<p>
+	<ul>
+		{% for c in chd %}
+		<li><a href="/{{c.pk}}/">{{ c.rank }} : <em>{{ c.name.text }}</em></a></li>
+		{% endfor %}
+	</ul>
+</p>
+
+<p><a href="/{{ n.p.pk }}/" class="up">&#11014;</a></p>
+
+</body>
+
+</html>

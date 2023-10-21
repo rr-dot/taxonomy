@@ -1,0 +1,10 @@
+.nav { padding:none; margin:none; padding:0px; background-color:#eeeeee; } 
+.nav ul { list-style-type:none; padding:0; margin:0; }
+.nav li { float:left; padding:0; margin:0; } 
+.nav a { padding:2em; padding-top:0.5em; padding-bottom:0.5em; display:block; color:black; }
+.nav a:hover { background-color:#cccccc; }
+.nav::after { display:block; clear:both; content:''; border-bottom:1px solid black; background-color:gray; margin-bottom:1em; }
+.up { font-size:200%; text-style:none; text-decoration:none; color:#0074E8; font-weight:bold; }
+.bread ul { padding:0; margin:0; }
+.bread li { display:inline; }
+.bread ul li+li:before { content: "/\00a0"; }
