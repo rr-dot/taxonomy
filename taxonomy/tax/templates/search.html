@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<head>
+
+<title>Search results: {% if GET %} {{ GET.text }} {{ GET.cat }} {% endif %}</title>
+<style>
+{% include 'style.css' %}
+</style>
+
+</head>
+
+<body>
+
+{% include 'nav.html' %}
+
+<h1>Search results: {{ GET.text }} {{ GET.cat }} </h1>
+
+
+<ul>
+{% for n in N %}
+	<li><a href="/{{n.pk}}">{{ n.rank }} : <em>{{ n.name.text }}</em></a></li>
+{% endfor %}
+</ul>
+
+</body>
+
+</html>

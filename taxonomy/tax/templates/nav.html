@@ -3,5 +3,12 @@
 	<li><a href="/">Home</a></li>
 	<li><a href="/1/">Browse</a></li>
 	<li><a href="/random/">Random</a></li>
+	<li style="float:right;">
+	<form action="/search" method="get">
+		<input type="text" name="text" value="{% if GET.text %}{{ GET.text}}{% endif %}"/>
+		<input type="text" name="cat" value="{% if GET.cat %}{{ GET.cat }}{% endif %}"/>
+		<input type="hidden" name="url" id="url" />
+		<input type="submit" value="Search" />
+	</li>
 </ul>
 </div>
