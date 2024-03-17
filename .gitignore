@@ -6,3 +6,4 @@ taxonomy/db.sqlite3
 
 !.gitignore
 !taxonomy
+!taxonomy/db.sqlite3_.xz
