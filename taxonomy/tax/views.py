@@ -64,7 +64,7 @@ def search(req):
 			print(len(N))
 		except:
 			N=[]
-	elif len(text)!=0:
+	elif len(cat)!=0:
 		try:
 			print('cat == nonempty')
 			N=Node.objects.filter(name__text__contains=text,rank__contains=cat)[:50]
