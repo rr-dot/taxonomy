@@ -1,12 +1,15 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse,Http404
+from django.template.loader import render_to_string
+from django.http import HttpResponse,Http404,HttpResponseNotFound
+from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from django.template import loader
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 
 def index(req):
-	return render(req,'index.html')
+	return render(req,'index.html',{'req':req.POST})
 
 def node(req,id):
 	try:
@@ -21,7 +24,7 @@ def node(req,id):
 		h.append(x)
 
 	h.reverse() # heritage (path from root to current node for breadcrumb menu)
-	return render(req,'node.html',{'n':n,'chd':Node.objects.filter(p_id=n.pk),'h':h})
+	return render(req,'node.html',{'n':n,'chd':Node.objects.filter(p_id=n.pk),'h':h,'req':req.POST})
 
 #how to get child nodes
 #
@@ -74,4 +77,37 @@ def search(req):
 		except:
 			N=[]
 
-	return render(req,'search.html',{'GET':req.GET,'N':N})
+	return render(req,'search.html',{'GET':req.GET,'N':N,'req':req.POST})
+
+def register(req):
+#	return HttpResponseNotFound(render_to_string('404.html'))
+	if req.user.is_authenticated: # already logged in
+		return redirect('index')
+	if req.method=='POST':
+		form=UserCreationForm(req.POST)
+		if form.is_valid():
+			form.save()
+			username = form.cleaned_data.get('username')
+			raw_password = form.cleaned_data.get('password1')
+			user = authenticate(username=username, password=raw_password)
+			login(req, user)
+			return redirect('index')
+	else:
+		form=UserCreationForm()
+
+	return render(req,'register.html',{'form':form})
+
+def loginview(req):
+	if req.user.is_authenticated: return redirect('index')
+	if req.method!='POST': return render(req,'login.html',{})
+	username,password = req.POST['username'],req.POST['password']
+	user = authenticate(req,username=username,password=password)
+	if user is not None:
+		print('logged in ',user)
+		login(req,user)
+
+	return redirect('index')
+
+def logoutview(req):
+	logout(req)
+	return redirect('index')
